@@ -1,5 +1,5 @@
 <script setup>
-import {ref} from 'vue'
+import {ref, reactive, computed, watch, onMounted, onUpdated, onUnmounted} from 'vue'
 
 let normalCount = 0
 const vueCount = ref(0)
@@ -28,7 +28,24 @@ const lazyText = ref('')
 const age = ref('')
 const userEmail = ref('')
 const price = ref('')
+const count2 = ref(0)
+//const name = ref('홍길동')
+const isActive = ref(true)
+const items = ref(['사과','배'])
+const user = ref({name: '이순신', age: 30,})
+const userReactive = reactive({name: '이순신', age: 30,})
+const items2 = reactive(['사과', '바나나'])
+const count3 = ref(0)
+const dummy = ref(0)
+const currentCity = ref('서울')
+const logMessage = ref('아직 감시 시스템이 작동하지 않았습니다.')
+const count4 = ref(0)
+let timerId = null
 
+
+const celebrateReactive = () => {userReactive.age++}
+const addItem = () => {items2.push(`과일 ${items2.length+1}`)}
+const removeItem = (index) => {items2.splice(index, 1)}
 const handleLink = () => {
     alert('수식어 덕분에 네이버로 이동하지 않고 함수만 실행됩니다!')
 }
@@ -58,6 +75,39 @@ const showAlert = () => {
 function showMessage(){
     message.value = inputValue.value
 }
+const increaseRef = () => {
+    count2.value++
+}
+const changeUserName = () => {
+    user.value.name = '장보고'
+}
+const getMethodResult = () => {
+    console.log('일반 함수 실행됨!')
+    return count3.value * 2
+}
+const doubleCount = computed(() => {
+    console.log('Computed 연산 실행됨!')
+    return count3.value * 2
+})
+watch(currentCity, (newValue, oldValue) => {
+    logMessage.value = `감시자 발동! [${oldValue}]에서 [${newValue}]로 변경됨.`
+    console.log(`[서버 요청 완료] 기상청 서버에서 ${newValue}의 날씨 API를 다시 조회합니다.`)
+})
+
+console.log('1. [setup] 컴포넌트가 메모리에 생성되었습니다. (DOM 접근 불가능)')
+onMounted(() => {
+    console.log('2. [onMounted] 화면에 완벽히 부착되었습니다! (API 호출/DOM 조작 적기)')
+    timerId = setInterval(() => {
+        count.value++
+    }, 3000)
+})
+onUpdated(() => {
+    console.log(`3. [onUpdated] 데이터가 변경되어 화면을 새로 그렸습니다. (현재 count: ${count4.value})`)
+})
+onUnmounted(() => {
+    clearInterval(timerId)
+    console.log('4. [onUnmounted] 컴포넌트가 소멸했습니다. 타이머 청소 완료!')
+})
 </script>
 
 <template>
@@ -273,7 +323,61 @@ function showMessage(){
             데이터 타입: <strong>{{ typeof price }}</strong>
             </p>
         </section>
+    </div>
+    <div class="practice-section">
+        <h2>반응형 상태 ref() 기초</h2>
+        <p>Ref 카운트: <strong>{{ count2 }}</strong></p>
+        <p>이름: <input v-model="user.name" />{{ user.name }}</p>
+        <p>활성 상태: {{ isActive ? '활성' : '비활성' }}</p>
+        <p>과일 목록: {{ items.join(', ') }}</p>
+        <p>사용자 정보: 이름 - {{ user.name }}, 나이 - {{ user.age }}</p>
+        <button @click="increaseRef">Ref 변수 증가</button>
+        <button @click="isActive = !isActive">토글</button>
+        <button @click="items.push('귤')">과일 추가</button>
+        <button @click="changeUserName">사용자 이름 변경</button>
+    </div>
+    <div class="practice-section">
+        <h2>반응형 상태 reactive() 특징 및 주의점</h2>
+        <h3>1) 객체(Object) reactive</h3>
+        <p>이름: {{ userReactive.name }} / 나이: {{ userReactive.age }}세</p>
+        <button @click="celebrateReactive">reactive 나이 한 살 추가</button>
+        <h3>2) 배열(Array) reactive</h3>
+        <ul>
+            <li v-for="(item, index) in items2" :key="index">
+                {{ item }}
+                <button @click="removeItem(index)" style="margin-left:8px; padding:2px 6px">삭제</button>
+            </li>
+        </ul>
+        <button @click="addItem">과일 항목 추가</button>
+    </div>
+    <div class="practice-section">
+        <h2>computed() 캐싱 동작 비교</h2>
+        <p>count: {{ count3 }} || dummy: {{ dummy }}</p>
+        <button @click="count3++">count 증가 (의존성 변경)</button>
+        <button @click="dummy++">dummy 증가 (무관한 변경)</button>
+        <p>일반 함수 결과: {{ getMethodResult() }}</p>
+        <p>Computed 결과: {{ doubleCount }}</p>
+    </div>
+    <div class="practice-section">
+        <h2>감시자 watch()의 원리와 실무 활용</h2>
+        <h3>지역 선택 제어판</h3>
+        <p>현재 선택된 도시: {{ currentCity }}</p>
+        <button @click="currentCity='서울'">서울 선택</button> &nbsp;
+        <button @click="currentCity='수원'">수원 선택</button> &nbsp;
+        <button @click="currentCity='부산'">부산 선택</button>
+        <div class="monitor">
+            <h3>파수꾼(watch) 모니터링 시스템</h3>
+            <p>{{ logMessage }}</p>
+            <small type="color:gray">(버튼을 누른 후 브라우저 콘솔창 F12를 확인해 보세요)</small>
         </div>
+    </div>
+    <div class="practice-section">
+        <h3>라이프사이클 훅 흐름 탐색기</h3>
+        <div v-if="count4 < 10" class="counter-display">
+            <p>실시간 타이머 카운트: {{ count4 }}</p>
+            <button @click="count4++">수동으로 숫자 올리기</button>
+        </div>
+    </div>
 </template>
 
 <style scoped>
