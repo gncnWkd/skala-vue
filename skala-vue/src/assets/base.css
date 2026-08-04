@@ -86,7 +86,7 @@ body {
   cursor: url("제목.png"), auto;
 }
 button {
-  cursor: url("제목.png"), auto;
+  cursor: url("제목.png") 2 2, auto;
 }
 h1 {
   font-weight: 800;

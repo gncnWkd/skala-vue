@@ -1,40 +1,45 @@
 <script setup>
-    import {ref} from 'vue'
+    import {ref, computed} from 'vue'
+    import { useConfigStore } from '@/stores/configStore'
 
-    defineProps({
-        weatherList: Object,
-        statusMessage: String
+    const props = defineProps({
+        cityItem: Object
     })
+    const configStore = useConfigStore()
     const emit = defineEmits(['select-city', 'show-detail'])
     const selectedCity = ref('')
     const sendSelectedCity = (cityName) => {
         selectedCity.value = cityName
         emit('select-city', selectedCity.value)
     }
-    const sendShowDetail = (cityName, cityStatus) => {
-        emit('show-detail', cityName, cityStatus)
+    const sendShowDetail = (cityId) => {
+        emit('show-detail', cityId)
     }
-
+    const displayTemp = computed(() => {
+        const rawTemp = props.cityItem.temp
+        if (configStore.unit === '화씨') {
+            return String(Math.round((rawTemp * 9) / 5 + 32))+'°F'
+        }
+        return String(rawTemp)+'°C'
+    })
 </script>
 
 <template>
-    <h3>🏙️ 지역별 날씨 현황</h3>
-        <div v-if="weatherList.length==0">
+    
+        <div v-if="cityItem==null">
             검색어와 일치하는 도시가 없습니다.
         </div>
-        <div v-else class="weatherCard" v-for="(item, index) in weatherList" :key="index" @click="sendSelectedCity(item.name)">
+        <div v-else class="weatherCard" @click="sendSelectedCity(cityItem.name)">
             <div class="weatherCardHeader">
-                <p>{{item.name}} ({{ item.status }})</p>
-                <button type="button" @click.stop="sendShowDetail(item.name, item.status)">상세보기</button>
+                <p>{{cityItem.name}} ({{ cityItem.status }})</p>
+                <button type="button" @click.stop="sendShowDetail(cityItem.id)">상세보기</button>
             </div>
-            현재 기온: {{ item.temp }}°C
+            현재 기온: {{ displayTemp }}
             <br />
-            <label class="tempSticker" v-if="item.temp>=25" style="background-color: #fe6161;">🔥 더움</label>
+            <label class="tempSticker" v-if="cityItem.temp>=25" style="background-color: #fe6161;">🔥 더움</label>
             <label class="tempSticker" v-else style="background-color: #94d2fd;">❄️ 선선함</label>
         </div>
-        <p class="statusRegion" id="statusBar">
-            {{ statusMessage }}
-        </p>
+        
 </template>
 
 <style scoped>
@@ -53,14 +58,6 @@
     }
     .weatherCard button {
         padding: 4px 8px
-    }
-    .statusRegion {
-        border-radius: 8px;
-        background-color: #e3ffe3;
-        text-align: center;
-        padding: 10px;
-        color: #20902b;
-        font-weight: bold;
     }
     label.tempSticker {
         color: white;

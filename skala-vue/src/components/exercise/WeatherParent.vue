@@ -43,11 +43,21 @@
             <SearchBar :current-query="searchQuery" @update-query="handleSearch" />
         </BaseDashboardCard>
         <BaseDashboardCard>
-            <WeatherCard :weather-list="filteredWeatherList" :status-message="statusMessage" @select-city="handleSelectCity" @show-detail="handleShowDetail"/>
+            <WeatherCard :weather-list="filteredWeatherList"  @select-city="handleSelectCity" @show-detail="handleShowDetail"/>
         </BaseDashboardCard>
-        
+        <p class="statusRegion" id="statusBar">
+            {{ statusMessage }}
+        </p>
     </div>
 </template>
 
 <style scoped>
+    .statusRegion {
+        border-radius: 8px;
+        background-color: #e3ffe3;
+        text-align: center;
+        padding: 10px;
+        color: #20902b;
+        font-weight: bold;
+    }
 </style>

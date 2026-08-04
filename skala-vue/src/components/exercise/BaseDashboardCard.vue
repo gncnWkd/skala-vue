@@ -3,6 +3,9 @@
 
 <template>
     <div class="contents">
+        <div class="map-board">
+
+        </div>
         <div class="dash-board">
             <slot></slot>
         </div>
@@ -17,6 +20,7 @@
         margin: 20px 0 20px 0;
         padding: 20px;
         background-color: #fbfbfb;
+        display:grid;
+        grid-template-columns: 1fr 1fr;
     }
-
 </style>
