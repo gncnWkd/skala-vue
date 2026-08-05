@@ -23,7 +23,9 @@
   ├── WeatherCard.vue -> 날씨 카드 컴포넌트  
   ├── WeatherMockup.vue -> 과제 진행 중 임시 파일  
   └── WeatherParent.vue -> 과제 진행 중 임시 파일
+
 ---
+
 #### 추가 진행 사항
 1. configStore.js에 다크모드-라이트모드 상태 저장용 반응형 변수와 변경하는 함수를 추가하여 프로젝트 전역에서 해당 변수에 접근할 수 있도록 하였습니다. DarkModeToggler에서 useConfigStore()를 이용해 반응형 변수 isDarkMode를 불러와 토글 및 상태를 볼 수 있습니다.
 2. 날씨 정보를 OpenWeatherMap API를 이용해 불러왔고, 해당 정보는 weatherStore.js에 저장하여 프로젝트 전역에서 날씨 정보에 접근할 수 있도록 하였습니다.
