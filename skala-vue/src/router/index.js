@@ -6,7 +6,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: () => import('../views/WeatherHomeView.vue')
+      component: () => import('../views/WeatherHomeView.vue'),
     },
     {
       path: '/about',
@@ -14,22 +14,22 @@ const router = createRouter({
       // route level code-splitting
       // this generates a separate chunk (About.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import('../views/WeatherAboutView.vue')
+      component: () => import('../views/WeatherAboutView.vue'),
     },
     {
       path: '/favorites',
       name: 'favorites',
-      component: () => import('../views/FavoriteWeatherView.vue')
+      component: () => import('../views/FavoriteWeatherView.vue'),
     },
     {
       path: '/weather/:cityId',
       name: 'weatherDetail',
-      component: () => import('../views/WeatherDetailView.vue')
+      component: () => import('../views/WeatherDetailView.vue'),
     },
     {
       path: '/:pathMatch(.*)',
       name: 'NotFound',
-      component: () => import('../views/NotFoundView.vue')
+      component: () => import('../views/NotFoundView.vue'),
     },
   ],
 })

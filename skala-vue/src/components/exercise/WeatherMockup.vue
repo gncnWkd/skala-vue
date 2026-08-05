@@ -1,37 +1,37 @@
 <script setup>
-import {ref, computed, watch, watchEffect} from 'vue'
+import { ref, computed, watch, watchEffect } from 'vue'
 //import axios from 'axios'
 
 //const cities = ['seoul', 'suwon', 'busan', 'incheon', 'gangneung']
 //const weatherLists = ref([])
 const weatherList = ref([
-    {id: 'city_01', name: '서울', temp: 28, status: '맑음'},
-    {id: 'city_02', name: '수원', temp: 24, status: '비'},
-    {id: 'city_03', name: '부산', temp: 26, status: '구름'},
-    {id: 'city_04', name: '인천', temp: 25, status: '맑음'},
+  { id: 'city_01', name: '서울', temp: 28, status: '맑음' },
+  { id: 'city_02', name: '수원', temp: 24, status: '비' },
+  { id: 'city_03', name: '부산', temp: 26, status: '구름' },
+  { id: 'city_04', name: '인천', temp: 25, status: '맑음' },
 ])
 const searchQuery = ref('')
 const statusMessage = ref('카드를 클릭하거나 검색해 보세요.')
 const selectedCityInfo = ref('')
 //const myWeatherData = ref([])
 
-
 const selectCity = (name) => {
-    statusMessage.value = `${name}이 선택되었습니다.`
-    selectedCityInfo.value = name;
-    
+  statusMessage.value = `${name}이 선택되었습니다.`
+  selectedCityInfo.value = name
 }
 watch(selectedCityInfo, () => {
-    console.log(`[watch 감지] 상태 바 문구가 업데이트되었습니다 -> "${statusMessage.value}"`)
+  console.log(`[watch 감지] 상태 바 문구가 업데이트되었습니다 -> "${statusMessage.value}"`)
 })
 watchEffect(() => {
-    console.log(`[watchEffect 자동 호출] 현재 검색어 '${searchQuery.value}'에 매칭되는 API 데이터를 필터링합니다.`)
+  console.log(
+    `[watchEffect 자동 호출] 현재 검색어 '${searchQuery.value}'에 매칭되는 API 데이터를 필터링합니다.`,
+  )
 })
 const showDetail = (cityName, status) => {
-    window.alert(`${cityName}의 현재 날씨는 [${status}] 상태입니다.`)
+  window.alert(`${cityName}의 현재 날씨는 [${status}] 상태입니다.`)
 }
 const filteredWeatherList = computed(() => {
-    return weatherList.value.filter(p => p.name.includes(searchQuery.value))
+  return weatherList.value.filter((p) => p.name.includes(searchQuery.value))
 })
 /*
 const fetchWeather = async () => {
@@ -56,84 +56,94 @@ const fetchWeather = async () => {
 onMounted(() => {
     fetchWeather()
 })*/
-
 </script>
 
 <template>
-    <div class="title">
-        <h1>🌤️ 과제 1: 날씨 (Mockup)</h1>
+  <div class="title">
+    <h1>🌤️ 과제 1: 날씨 (Mockup)</h1>
+  </div>
+  <div class="contents">
+    <div class="textRegion" id="citySearch">
+      <h3>🔍 도시 검색</h3>
+      <input
+        type="text"
+        :value="searchQuery"
+        @input="(e) => (searchQuery = e.target.value)"
+        placeholder=" 검색할 도시 이름 입력"
+        style="width: 500px; height: 30px"
+      />
+      <p>검색 중인 도시: {{ searchQuery }}</p>
     </div>
-    <div class="contents">
-        <div class="textRegion" id="citySearch">
-            <h3>🔍 도시 검색</h3>
-            <input type="text" :value="searchQuery" @input="(e) => (searchQuery=e.target.value)" placeholder=" 검색할 도시 이름 입력" style="width:500px; height:30px" />
-            <p>검색 중인 도시: {{ searchQuery }}</p>
-        </div>
 
-        <div class="textRegion" id="weatherByCity">
-            <h3>🏙️ 지역별 날씨 현황</h3>
-            <div v-if="filteredWeatherList.length==0">
-                검색어와 일치하는 도시가 없습니다.
-            </div>
-            <div v-else class="weatherCard" v-for="(item, index) in filteredWeatherList" :key="index" @click="selectCity(item.name)">
-                <div class="weatherCardHeader">
-                    <p>{{item.name}} ({{ item.status }})</p>
-                    <button type="button" @click.stop="showDetail(item.name, item.status)">상세보기</button>
-                </div>
-                현재 기온: {{ item.temp }}°C
-                <br />
-                <label class="tempSticker" v-if="item.temp>=25" style="background-color: #fe6161;">🔥 더움 (25도 이상)</label>
-                <label class="tempSticker" v-else style="background-color: #94d2fd;">❄️ 선선함 (25도 미만)</label>
-                
-            </div>
+    <div class="textRegion" id="weatherByCity">
+      <h3>🏙️ 지역별 날씨 현황</h3>
+      <div v-if="filteredWeatherList.length == 0">검색어와 일치하는 도시가 없습니다.</div>
+      <div
+        v-else
+        class="weatherCard"
+        v-for="(item, index) in filteredWeatherList"
+        :key="index"
+        @click="selectCity(item.name)"
+      >
+        <div class="weatherCardHeader">
+          <p>{{ item.name }} ({{ item.status }})</p>
+          <button type="button" @click.stop="showDetail(item.name, item.status)">상세보기</button>
         </div>
-
-        <p class="statusRegion" id="statusBar">
-            {{ statusMessage }}
-        </p>
-        
+        현재 기온: {{ item.temp }}°C
+        <br />
+        <label class="tempSticker" v-if="item.temp >= 25" style="background-color: #fe6161"
+          >🔥 더움 (25도 이상)</label
+        >
+        <label class="tempSticker" v-else style="background-color: #94d2fd"
+          >❄️ 선선함 (25도 미만)</label
+        >
+      </div>
     </div>
+
+    <p class="statusRegion" id="statusBar">
+      {{ statusMessage }}
+    </p>
+  </div>
 </template>
 
 <style scoped>
 .weatherCard {
-    border: 1px solid #d7d7d7;
-    border-radius: 8px;
-    margin: 0 0 15px 0;
-    padding: 10px;
-    background-color: white;
+  border: 1px solid #d7d7d7;
+  border-radius: 8px;
+  margin: 0 0 15px 0;
+  padding: 10px;
+  background-color: white;
 }
 .weatherCardHeader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
 }
 .weatherCard button {
-    padding: 4px 8px
+  padding: 4px 8px;
 }
 .textRegion {
-    border: 1px solid #d7d7d7;
-    border-radius: 10px;
-    margin: 20px 0 20px 0;
-    padding: 20px;
-    background-color: #fbfbfb;
+  border: 1px solid #d7d7d7;
+  border-radius: 10px;
+  margin: 20px 0 20px 0;
+  padding: 20px;
+  background-color: #fbfbfb;
 }
 label.tempSticker {
-    color: white;
-    font-size: 85%;
-    padding: 5px;
-    border-radius: 5px;
+  color: white;
+  font-size: 85%;
+  padding: 5px;
+  border-radius: 5px;
 }
 .statusRegion {
-    border-radius: 8px;
-    background-color: #e3ffe3;
-    text-align: center;
-    padding: 10px;
-    color: #20902b;
-    font-weight: bold;
+  border-radius: 8px;
+  background-color: #e3ffe3;
+  text-align: center;
+  padding: 10px;
+  color: #20902b;
+  font-weight: bold;
 }
-#statusBar{
-
+#statusBar {
 }
 </style>
