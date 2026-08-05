@@ -1,99 +1,80 @@
-/* color palette from <https://github.com/vuejs/theme> */
 :root {
-  --vt-c-white: #ffffff;
-  --vt-c-white-soft: #f8f8f8;
-  --vt-c-white-mute: #f2f2f2;
-
-  --vt-c-black: #181818;
-  --vt-c-black-soft: #222222;
-  --vt-c-black-mute: #282828;
-
-  --vt-c-indigo: #2c3e50;
-
-  --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
-  --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
-  --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
-  --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
-
-  --vt-c-text-light-1: var(--vt-c-indigo);
-  --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
-  --vt-c-text-dark-1: var(--vt-c-white);
-  --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+  --el-color-primary: #246bfe;
+  --el-color-primary-light-3: #7b90be;
+  --el-color-primary-light-9: #eaf3ff;
+  --el-border-radius-base: 10px;
+  --el-font-family: Inter, Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --ink: #17233d;
+  --muted: #68738a;
+  --line: #e5eaf2;
+  --surface: #ffffff;
+  --surface-soft: #f7f9fd;
+  --primary: #246bfe;
+  --primary-dark: #1554df;
+  --sky: #eaf3ff;
+  --success: #16835e;
+  --shadow: 0 18px 45px rgba(31, 61, 113, 0.1);
+  --button-shadow: rgba(23, 35, 61, .04);
+  --theme-icon: #5c6d88;
+  --theme-icon-background: #f0f3f8;
+  --toggle-hover-border: #b7cdfb;
+  --card-gradient-start: #ffffff;
+  --card-gradient-end: #fbfcff;
+  --weather-icon-background: #f2f6ff;
+  --favorite-background: #f7f9fd;
+  --state-surface: #ffffff;
 }
 
-/* semantic color variables for this project */
-:root {
-  --color-background: var(--vt-c-white);
-  --color-background-soft: var(--vt-c-white-soft);
-  --color-background-mute: var(--vt-c-white-mute);
-
-  --color-border: var(--vt-c-divider-light-2);
-  --color-border-hover: var(--vt-c-divider-light-1);
-
-  --color-heading: var(--vt-c-text-light-1);
-  --color-text: var(--vt-c-text-light-1);
-
-  --section-gap: 160px;
+:root.dark {
+  --el-color-primary: #79a5ff;
+  --el-color-primary-light-3: #5f82c6;
+  --el-color-primary-light-9: #202d45;
+  --el-bg-color: #182235;
+  --el-bg-color-overlay: #202c42;
+  --el-fill-color-blank: #182235;
+  --el-fill-color-light: #202c42;
+  --el-fill-color-lighter: #26334a;
+  --el-border-color: #34435d;
+  --el-border-color-light: #2d3b54;
+  --el-text-color-primary: #edf3ff;
+  --el-text-color-regular: #c4d0e4;
+  --el-text-color-secondary: #9eacc3;
+  --ink: #edf3ff;
+  --muted: #aab7cb;
+  --line: #34435d;
+  --surface: #182235;
+  --surface-soft: #202c42;
+  --primary: #79a5ff;
+  --primary-dark: #a9c4ff;
+  --sky: #263958;
+  --success: #58c69b;
+  --shadow: 0 18px 45px rgba(0, 0, 0, .24);
+  --button-shadow: rgba(0, 0, 0, .2);
+  --theme-icon: #ffc85a;
+  --theme-icon-background: #3c3421;
+  --toggle-hover-border: #5b76aa;
+  --card-gradient-start: #1d2a40;
+  --card-gradient-end: #182235;
+  --weather-icon-background: #2a3b58;
+  --favorite-background: #26334a;
+  --state-surface: #182235;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-background: var(--vt-c-black);
-    --color-background-soft: var(--vt-c-black-soft);
-    --color-background-mute: var(--vt-c-black-mute);
 
-    --color-border: var(--vt-c-divider-dark-2);
-    --color-border-hover: var(--vt-c-divider-dark-1);
-
-    --color-heading: var(--vt-c-text-dark-1);
-    --color-text: var(--vt-c-text-dark-2);
-  }
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  font-weight: normal;
-}
+* { box-sizing: border-box; margin: 0; }
 
 body {
+  min-width: 320px;
   min-height: 100vh;
-  color: var(--color-text);
-  background: var(--color-background);
-  transition:
-    color 0.5s,
-    background-color 0.5s;
-  line-height: 1.6;
-  font-family:
-    Inter,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    'Fira Sans',
-    'Droid Sans',
-    'Helvetica Neue',
-    sans-serif;
+  color: var(--ink);
+  background: #f3f6fc;
+  font-family: Inter, Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 15px;
-  text-rendering: optimizeLegibility;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  cursor: url("제목.png"), auto;
 }
-button {
-  cursor: url("제목.png") 2 2, auto;
-}
-h1 {
-  font-weight: 800;
-}
-div.practice-section {
-  border-top: 2px solid;
-  border-color: #d6d6d6;
-  margin-bottom: 20px;
-  padding: 5px;
-}
+
+:root.dark body { background: #101827; }
+
+button, input { font: inherit; }
+button { cursor: pointer; }

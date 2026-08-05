@@ -1,26 +1,11 @@
-<script setup>
-</script>
-
 <template>
-    <div class="contents">
-        <div class="map-board">
-
-        </div>
-        <div class="dash-board">
-            <slot></slot>
-        </div>
-    </div>
+  <el-card class="dashboard-card" shadow="never">
+    <slot />
+  </el-card>
 </template>
 
-
 <style scoped>
-    .dash-board{
-        border: 1px solid #d7d7d7;
-        border-radius: 10px;
-        margin: 20px 0 20px 0;
-        padding: 20px;
-        background-color: #fbfbfb;
-        display:grid;
-        grid-template-columns: 1fr 1fr;
-    }
+.dashboard-card { border-color: var(--line); border-radius: 20px; background: var(--surface); box-shadow: 0 8px 22px rgba(27, 55, 100, .035); }
+:deep(.el-card__body) { padding: 22px; background: var(--surface);}
+@media (max-width: 640px) { .dashboard-card { border-radius: 16px; } :deep(.el-card__body) { padding: 17px; } }
 </style>

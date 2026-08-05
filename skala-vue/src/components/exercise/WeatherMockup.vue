@@ -1,5 +1,5 @@
 <script setup>
-import {ref, computed, watch, watchEffect, onMounted, onUpdated} from 'vue'
+import {ref, computed, watch, watchEffect} from 'vue'
 //import axios from 'axios'
 
 //const cities = ['seoul', 'suwon', 'busan', 'incheon', 'gangneung']
@@ -64,14 +64,13 @@ onMounted(() => {
         <h1>🌤️ 과제 1: 날씨 (Mockup)</h1>
     </div>
     <div class="contents">
-        <p class="textRegion" id="citySearch">
+        <div class="textRegion" id="citySearch">
             <h3>🔍 도시 검색</h3>
-            <input type="text" :value="searchQuery" @input="(e) => (searchQuery=e.target.value)" placeholder=" 검색할 도시 이름 입력" style="width:500px; height:30px"/>
+            <input type="text" :value="searchQuery" @input="(e) => (searchQuery=e.target.value)" placeholder=" 검색할 도시 이름 입력" style="width:500px; height:30px" />
             <p>검색 중인 도시: {{ searchQuery }}</p>
-            
-        </p>
+        </div>
 
-        <p class="textRegion" id="weatherByCity">
+        <div class="textRegion" id="weatherByCity">
             <h3>🏙️ 지역별 날씨 현황</h3>
             <div v-if="filteredWeatherList.length==0">
                 검색어와 일치하는 도시가 없습니다.
@@ -87,7 +86,7 @@ onMounted(() => {
                 <label class="tempSticker" v-else style="background-color: #94d2fd;">❄️ 선선함 (25도 미만)</label>
                 
             </div>
-        </p>
+        </div>
 
         <p class="statusRegion" id="statusBar">
             {{ statusMessage }}
