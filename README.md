@@ -2,6 +2,7 @@
 # SKALA-VUE
 
 ## Vue 3와 Vue Router를 기반으로 만든 기상 관측 대시보드입니다.
+https://skala-vue-hoochoo.vercel.app/ (vercel 배포)
 
 #### 실행 방법
 - npm run dev (개발 환경 실행)
