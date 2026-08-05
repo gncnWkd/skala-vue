@@ -26,7 +26,7 @@
 
 ---
 
-#### 추가 진행 사항
+#### 세부 진행 사항 설명
 1. configStore.js에 다크모드-라이트모드 상태 저장용 반응형 변수와 변경하는 함수를 추가하여 프로젝트 전역에서 해당 변수에 접근할 수 있도록 하였습니다. DarkModeToggler에서 useConfigStore()를 이용해 반응형 변수 isDarkMode를 불러와 토글 및 상태를 볼 수 있습니다.
 2. 날씨 정보를 OpenWeatherMap API를 이용해 불러왔고, 해당 정보는 weatherStore.js에 저장하여 프로젝트 전역에서 날씨 정보에 접근할 수 있도록 하였습니다.
 3. 또한 weatherStore에 즐겨찾기 등록 여부를 반응형 변수로 저장하여 FavoriteWeatherView에서 접근할 수 있습니다.
@@ -37,3 +37,4 @@
    4. 이미 즐겨찾기에 등록되었던 도시 id는 사라지고, 즐겨찾기가 아니었던 도시 id는 리스트에 새로 추가됩니다.
    5. FavoriteWeatherView는 weatherStore에서 반응형변수 favoriteWeatherData와 favoriteCityIds를 가져와 해당 정보를 토대로 즐겨찾기 도시 카드만 표시합니다.
    6. WeatherHomeView 역시 weatherStore에서 반응형변수를 가져와 해당 정보를 토대로 검색어로 필터링된 도시 카드를 표시합니다.
+5. Element Plus Library를 이용하여 여러 UI를 적용하였습니다. <el-card>를 이용해 weather-card의 UI를, <el-button>을 이용해 즐겨찾기 버튼과 토글 버튼 등 다양한 버튼의 UI를, <el-alert>,<el-empty>를 이용해 전달받은 API 데이터에 대한 feedback이나 결과 없음 UI등을 적용하였습니다. 이외에도 <el-tag>, <el-input> 등 다양한 Element Plus Library UI를 사용하였습니다.
